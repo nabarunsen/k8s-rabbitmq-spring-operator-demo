@@ -1,0 +1,31 @@
+---
+# Expose producer and consumer instances using a load balancer.
+apiVersion: v1
+kind: Service
+metadata:
+  name: producer
+  namespace: k8s-rmq-operator
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 31091
+  selector:
+    role: producer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer
+  namespace: k8s-rmq-operator
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 31092
+  selector:
+    role: consumer
